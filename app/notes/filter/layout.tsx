@@ -9,10 +9,10 @@ type Props = {
 };
 
 export default async function FilterLayout({ children, modal, params }: Props) {
-  const resolvedParams = await Promise.resolve(params); 
-  const currentTag = Array.isArray(resolvedParams?.tag)
-    ? resolvedParams.tag[0]
-    : resolvedParams?.tag ?? "";
+
+  const currentTag = Array.isArray(params?.tag)
+    ? params.tag[0]
+    : params?.tag ?? "";
 
   return (
     <div className={css.container}>
