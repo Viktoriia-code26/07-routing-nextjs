@@ -1,6 +1,6 @@
 "use client"
 
-import css from "./NotesPage.module.css";
+import css from "../../NotesPage.module.css";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
