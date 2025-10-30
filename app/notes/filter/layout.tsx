@@ -2,17 +2,20 @@ import { ReactNode } from "react";
 import SidebarNotes from "./@sidebar/default";
 import css from "../layoutNotes.module.css"
 
-type Props = {
+export default async function FilterLayout({
+  children,
+  modal,
+  params,
+}: {
   children: ReactNode;
   modal?: ReactNode;
-  params: { tag?: string | string[] };
-};
+  params: Promise<{ tag?: string | string[] }>;
+}) {
+  const resolvedParams = await params;
 
-export default async function FilterLayout({ children, modal, params }: Props) {
-
-  const currentTag = Array.isArray(params?.tag)
-    ? params.tag[0]
-    : params?.tag ?? "";
+  const currentTag = Array.isArray(resolvedParams?.tag)
+    ? resolvedParams.tag[0]
+    : resolvedParams?.tag ?? "";
 
   return (
     <div className={css.container}>
