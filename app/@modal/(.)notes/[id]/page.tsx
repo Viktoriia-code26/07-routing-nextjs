@@ -35,9 +35,12 @@ export default function NotePreview() {
   return (
     <Modal open={true} onClose={handleClose}>
       <div className={css.container}>
-        <h2>{note.title}</h2>
-        <p>{note.content}</p>
-        <p>{note.updatedAt || note.createdAt}</p>
+        <h2 className={css.header}>{note.title}</h2>
+        <p className={css.content}>{note.content}</p>
+           <p className={css.tag}><b>Tag:</b> {note.tag}</p>
+      <small className={css.date}>
+        {note.updatedAt ? `Updated at: ${note.updatedAt}` : `Created at: ${note.createdAt}`}
+      </small>
       </div>
     </Modal>
   );
