@@ -6,15 +6,15 @@ import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useDebounce } from "use-debounce";
 
-import SearchBox from "../../components/SearchBox/SearchBox";
-import NoteList from "../../components/NoteList/NoteList";
-import Pagination from "../../components/Pagination/Pagination";
-import NoteModal from "../../components/Modal/Modal";
-import NoteForm from "../../components/NoteForm/NoteForm";
-import Loader from "../../components/Loader/Loader";
-import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import SearchBox from "@/components/SearchBox/SearchBox";
+import NoteList from "@/components/NoteList/NoteList";
+import Pagination from "@/components/Pagination/Pagination";
+import NoteModal from "@/components/Modal/Modal";
+import NoteForm from "@/components/NoteForm/NoteForm";
+import Loader from "@/components/Loader/Loader";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 
-import { fetchNotes } from "../../lib/api";
+import { fetchNotes } from "@/lib/api";
 
 const useToggle = () => {
   const [isOpen, setIsOpen] = useState(false);

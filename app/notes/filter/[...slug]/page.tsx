@@ -20,7 +20,7 @@ export default function FilteredNotesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (typeof window === "undefined") return; // SSR guard
+    if (typeof window === "undefined") return; 
     let isMounted = true;
 
     // eslint-disable-next-line react-hooks/set-state-in-effect

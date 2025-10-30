@@ -9,38 +9,35 @@ import css from "../../../notePreview.module.css";
 export default function NotePreview() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  
+
   const { data: note, isLoading, error } = useQuery({
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
-    refetchOnMount: false,
-    enabled: !!id, 
+    enabled: !!id,
   });
 
-  if (!id) return null;
-  
-  const handleClose = () => {
-    router.back();
-  };
+  const handleClose = () => router.back();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error || !note) return <p>Error loading note.</p>;
+  if (isLoading)
+    return (
+      <Modal open={true} onClose={handleClose}>
+        Loading...
+      </Modal>
+    );
 
-  const formattedDate = note.updatedAt
-    ? `Updated at: ${note.updatedAt}`
-    : `Created at: ${note.createdAt}`;
+  if (error || !note)
+    return (
+      <Modal open={true} onClose={handleClose}>
+        Error loading note.
+      </Modal>
+    );
 
   return (
-    <Modal open={true} onClose={handleClose} key={note.id}>
+    <Modal open={true} onClose={handleClose}>
       <div className={css.container}>
-        <div className={css.item}>
-          <div className={css.header}>
-            <h2>{note.title}</h2>
-          </div>
-          <p className={css.content}>{note.content}</p>
-          <p className={css.date}>{formattedDate}</p>
-           {note.tag && <span className={css.tag}>Tag: {note.tag}</span>}
-        </div>
+        <h2>{note.title}</h2>
+        <p>{note.content}</p>
+        <p>{note.updatedAt || note.createdAt}</p>
       </div>
     </Modal>
   );
