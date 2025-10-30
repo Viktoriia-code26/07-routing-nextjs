@@ -4,8 +4,8 @@ import css from "../layoutNotes.module.css";
 
 interface Props {
   children: ReactNode;
-  modal: ReactNode;
-  params: { tag?: string | string[] }; // ✅ без Promise
+  modal?: ReactNode;
+  params: { tag?: string | string[] }; 
 }
 
 export default function FilterLayout({ children, modal, params }: Props) {
@@ -19,7 +19,7 @@ export default function FilterLayout({ children, modal, params }: Props) {
         <SidebarNotes currentTag={currentTag} />
       </aside>
       <main className={css.notesWrapper}>{children}</main>
-      {modal}
+      {modal && modal}
     </div>
   );
 }
