@@ -43,16 +43,15 @@ export async function fetchNotes({
 }
 
 
-export async function fetchNotesByTag(
+export const fetchNotesByTag = async (
   tag?: string,
-  currentPage = 1,
-  perPage = 12
-): Promise<ApiNoteResponse> {
-  const response = await axios.get(BASE_URL, {
+  currentPage: number = 1
+): Promise<ApiNoteResponse> => {
+  const response = await axios.get<ApiNoteResponse>(BASE_URL, {
     params: {
-      tag: tag || undefined,
+      perPage: 12,
       page: currentPage,
-      perPage,
+      tag: tag || undefined,
     },
     headers: {
       Authorization: `Bearer ${token}`,
@@ -60,14 +59,8 @@ export async function fetchNotesByTag(
     },
   });
 
-  const data = response.data;
-
-  return {
-    notes: data.results || data.notes || [],
-    totalPages: data.totalPages || 1,
-    totalResults: data.totalResults || 0,
-  };
-}
+  return response.data;
+};
 
 
 export async function createNote(newNoteData: NewNoteData): Promise<Note> {
@@ -99,8 +92,9 @@ export async function fetchNoteById(id: string): Promise<Note | null> {
       Accept: "application/json",
     },
   });
-    console.log("Fetching note by id:", `${BASE_URL}/${id}`);
+   
     return response.data;
+
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 404) {
       console.warn("Note not found:", id);
