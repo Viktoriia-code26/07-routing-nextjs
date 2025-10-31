@@ -4,7 +4,7 @@ export interface Note {
   id: string;
   title: string;
   content: string;
-  tag?: string;
+  tag?: NoteTag;
   createdAt: string;
   updatedAt?: string;
 }
@@ -12,7 +12,7 @@ export interface Note {
 export interface NewNoteData {
   title: string;
   content: string;
-  tag?: string;
+  tag: NoteTag;
 }
 export interface NoteUpdateData {
     id: string;

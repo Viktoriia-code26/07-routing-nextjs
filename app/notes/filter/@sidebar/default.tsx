@@ -10,24 +10,25 @@ interface SidebarNotesProps {
 }
 
 export default function SidebarNotes({ currentTag = "all" }: SidebarNotesProps) {
-  const normalizedTag = (currentTag ?? "").toLowerCase();
+  const normalizedTag = currentTag.toLowerCase();
 
   return (
     <ul className={css.menuList}>
       <li className={css.menuItem}>
         <Link
-          href="/notes/filter"
+          href="/notes/filter/all"
           className={`${css.menuLink} ${normalizedTag === "all" ? css.active : ""}`}
         >
           All notes
         </Link>
       </li>
 
-      {TAGS.map(tag => (
+      {TAGS.map((tag) => (
         <li
           key={tag}
-          className={`${css.menuItem} ${normalizedTag === tag.toLowerCase() ? css.active : ""
-            }`}
+          className={`${css.menuItem} ${
+            normalizedTag === tag.toLowerCase() ? css.active : ""
+          }`}
         >
           <Link href={`/notes/filter/${tag}`} className={css.menuLink}>
             {tag}
