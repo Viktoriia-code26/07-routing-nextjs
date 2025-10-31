@@ -91,12 +91,21 @@ export async function deleteNote(id: string): Promise<Note> {
 }
 
 
-export async function fetchNoteById(id: string): Promise<Note> {
-  const response = await axios.get(`${BASE_URL}/${id}`, {
+export async function fetchNoteById(id: string): Promise<Note | null> {
+  try {
+    const response = await axios.get(`${BASE_URL}/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json",
     },
   });
-  return response.data;
+    console.log("Fetching note by id:", `${BASE_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      console.warn("Note not found:", id);
+      return null;
+    }
+    throw error;
+  }
 }
