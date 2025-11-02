@@ -40,7 +40,7 @@ export default function NotesClient({ initialTag }: NotesClientProps) {
   useEffect(() => {
     if (initialTag) {
         // eslint-disable-next-line react-hooks/set-state-in-effect
-     setTag(initialTag);
+    setTag(initialTag);
     setCurrentPage(1);
     setSearchTerm("");
     }
