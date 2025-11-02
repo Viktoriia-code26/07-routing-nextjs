@@ -47,9 +47,6 @@ export default function NotePreview({ noteId }: Props) {
   return (
     <Modal open={true} onClose={handleClose}>
       <div className={css.container}>
-        <button onClick={handleClose} className={css.closeButton}>
-          ✖ Close
-        </button>
         <h2 className={css.header}>{noteData.title}</h2>
         <p className={css.content}>{noteData.content}</p>
         <p className={css.tag}>
