@@ -7,17 +7,18 @@ import { fetchNoteById } from "@/lib/api";
 import css from "../../../notePreview.module.css";
 import { Note } from "@/types/note";
 
+
 type Props = {
-  note: Note;
+  noteId: string;
 };
 
-export default function NotePreview({}: Props) {
+export default function NotePreview({noteId}: Props) {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
-  const { data: noteData, isLoading, error } = useQuery({
-    queryKey: ["note", id],
-    queryFn: () => fetchNoteById(id),
+  const { data: noteData, isLoading, error } = useQuery<Note>({
+    queryKey: ["note", noteId],
+    queryFn: () => fetchNoteById(noteId),
     enabled: !!id,
   });
 

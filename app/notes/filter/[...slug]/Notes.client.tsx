@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 import css from "../../NotesPage.module.css";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useDebounce } from "use-debounce";
 
@@ -16,6 +16,7 @@ import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 
 import { fetchNotes } from "@/lib/api";
 
+
 const useToggle = () => {
   const [isOpen, setIsOpen] = useState(false);
   return {
@@ -25,20 +26,39 @@ const useToggle = () => {
   };
 };
 
-export default function NotesClient() {
+interface NotesClientProps {
+  initialTag?: string;
+}
+
+export default function NotesClient({ initialTag }: NotesClientProps) {
   const { isOpen, open, close } = useToggle();
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch] = useDebounce(searchTerm, 600);
   const [currentPage, setCurrentPage] = useState(1);
+  const [tag, setTag] = useState<string>(initialTag || "all");
 
+  useEffect(() => {
+    if (initialTag) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+     setTag(initialTag);
+    setCurrentPage(1);
+    setSearchTerm("");
+    }
+  }, [initialTag]);
+  
   const handleSearch = (query: string) => {
     setSearchTerm(query);
     setCurrentPage(1);
   };
 
   const { data, isLoading, error, isFetching } = useQuery({
-    queryKey: ["notes", debouncedSearch, currentPage],
-    queryFn: () => fetchNotes({ query: debouncedSearch, currentPage }),
+    queryKey: ["notes", debouncedSearch, tag, currentPage ],
+    queryFn: () =>
+      fetchNotes({
+        query: debouncedSearch,
+        tag: tag === "all" ? undefined : tag,
+        currentPage,
+      }),
     placeholderData: keepPreviousData,
   });
 
@@ -72,7 +92,7 @@ export default function NotesClient() {
         {!isLoading && notes.length > 0 ? (
           <NoteList notes={notes} />
         ) : (
-          !isLoading && <p className={css.empty}>No notes found.</p>
+          !isLoading && <p className={css.empty}>No notes found for {tag}.</p>
         )}
       </main>
 

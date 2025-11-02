@@ -1,4 +1,3 @@
-"use client";
 
 import css from "../../../sidebarNotes.module.css";
 import Link from "next/link";
